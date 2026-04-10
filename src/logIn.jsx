@@ -17,6 +17,13 @@ function LogIn() {
       active: true,
     },
     {
+      username: "supplier01",
+      password: "1234",
+      role: "supplier",
+      email: "supplier@makhzan.com",
+      active: true,
+    },
+    {
       username: "supplier",
       password: "1234",
       role: "supplier",
@@ -24,27 +31,31 @@ function LogIn() {
       active: true,
     },
     {
-  username: "admin",
-  password: "1234",
-  role: "admin",
-  email: "admin@makhzan.com",
-  active: true,
-},
-    {username:"manager",
-    password:"1234",
-    role:"manager",
-    email:"manager@makhzan.com",
-    active:true,
-    }
+      username: "admin",
+      password: "1234",
+      role: "admin",
+      email: "admin@makhzan.com",
+      active: true,
+    },
+    {
+      username: "manager",
+      password: "1234",
+      role: "manager",
+      email: "manager@makhzan.com",
+      active: true,
+    },
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();
+
     const foundUser = users.find(
         (user) =>
-            (user.username === username || user.email === username) &&
-            user.password === password
+            (user.username === trimmedUsername || user.email === trimmedUsername) &&
+            user.password === trimmedPassword
     );
 
     if (!foundUser) {
@@ -70,12 +81,12 @@ function LogIn() {
     setError("");
 
     if (foundUser.role === "admin") {
-      navigate("/dashboard"); // admin dashboard
-    } else if (foundUser.role === "staff") {
       navigate("/dashboard");
+    } else if (foundUser.role === "staff") {
+      navigate("/staffDashboard");
     } else if (foundUser.role === "supplier") {
       navigate("/supplier");
-    }else if (foundUser.role === "manager") {
+    } else if (foundUser.role === "manager") {
       navigate("/im-dashboard");
     } else {
       navigate("/");
