@@ -1,12 +1,9 @@
 :root {
     --yellow: #dbc93b;
     --darkGray: #262b40;
-    --blue1: rgba(168, 196, 236, 0.5);
     --blue2: #5379ae;
-    --blue3: #0474c4;
     --blue4: #06457f;
     --white: #ffffff;
-    --offWhite: #f8f9fd;
     --border: #d9e2f1;
     --text: #1f2a44;
     --muted: #5f6b85;
@@ -25,7 +22,7 @@
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    padding: 8px 0 24px;
+    padding: 28px 0 24px;
 }
 
 .supplier-page .topbar {
@@ -38,7 +35,7 @@
 
 .supplier-page .topbar-title {
     width: 100%;
-    max-width: 900px;
+    max-width: 980px;
 }
 
 .supplier-page .dashboard-kicker,
@@ -188,8 +185,7 @@
 
 .supplier-page .request-card,
 .supplier-page .thread-item,
-.supplier-page .document-item,
-.supplier-page .notification-item {
+.supplier-page .document-item {
     background: #ffffff;
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -200,8 +196,7 @@
 
 .supplier-page .request-card:hover,
 .supplier-page .thread-item:hover,
-.supplier-page .document-item:hover,
-.supplier-page .notification-item:hover {
+.supplier-page .document-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
 }
@@ -368,7 +363,7 @@
     background: var(--white);
     font-size: 0.95rem;
     box-sizing: border-box;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .supplier-page input:focus,
@@ -505,7 +500,7 @@
 
 .supplier-page .badge.shipped {
     background: rgba(4, 116, 196, 0.12);
-    color: var(--blue3);
+    color: #0474c4;
 }
 
 .supplier-page .badge.delivered {
@@ -519,10 +514,6 @@
     border-radius: 18px;
     padding: 2rem 1.5rem;
     text-align: center;
-}
-
-.supplier-page .empty-state.compact {
-    padding: 1.7rem 1.2rem;
 }
 
 .supplier-page .empty-state h3 {

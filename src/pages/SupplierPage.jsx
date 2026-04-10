@@ -179,9 +179,7 @@ export default function SupplierPage() {
                         status:
                             availabilityStatus === "Available"
                                 ? "Confirmed"
-                                : availabilityStatus === "Partially Available"
-                                    ? "Under Review"
-                                    : "Under Review",
+                                : "Under Review",
                     }
                     : request
             )
@@ -314,8 +312,8 @@ export default function SupplierPage() {
                                     <div className="empty-state">
                                         <h3>No assigned requests yet</h3>
                                         <p>
-                                            New supplier requests will appear here
-                                            once they are assigned to you.
+                                            New supplier requests will appear here once
+                                            they are assigned to you.
                                         </p>
                                     </div>
                                 ) : (
@@ -334,9 +332,7 @@ export default function SupplierPage() {
                                                 onSaveAvailability={
                                                     handleSaveAvailability
                                                 }
-                                                onSaveDelivery={
-                                                    handleSaveDelivery
-                                                }
+                                                onSaveDelivery={handleSaveDelivery}
                                                 onSaveStatus={handleSaveStatus}
                                             />
                                         </div>
