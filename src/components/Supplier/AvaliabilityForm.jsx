@@ -1,20 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AvailabilityForm({ request, onSave }) {
-    const [availabilityStatus, setAvailabilityStatus] = useState("");
-    const [availableQuantity, setAvailableQuantity] = useState("");
+    const [availabilityStatus, setAvailabilityStatus] = useState(
+        request?.availabilityStatus || ""
+    );
+    const [availableQuantity, setAvailableQuantity] = useState(
+        request?.availableQuantity ?? ""
+    );
     const [message, setMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
+
+    useEffect(() => {
+        setAvailabilityStatus(request?.availabilityStatus || "");
+        setAvailableQuantity(request?.availableQuantity ?? "");
+        setMessage("");
+        setMessageType("");
+    }, [request]);
 
     const handleSubmit = () => {
         if (!availabilityStatus) {
             setMessage("Availability status is required.");
+            setMessageType("error");
             return;
         }
 
         if (availabilityStatus === "Partially Available") {
             const numericValue = Number(availableQuantity);
-            if (!availableQuantity || Number.isNaN(numericValue) || numericValue <= 0) {
+
+            if (
+                availableQuantity === "" ||
+                Number.isNaN(numericValue) ||
+                numericValue <= 0
+            ) {
                 setMessage("Please enter a valid positive quantity.");
+                setMessageType("error");
                 return;
             }
         }
@@ -29,11 +48,15 @@ export default function AvailabilityForm({ request, onSave }) {
         });
 
         setMessage("Availability response saved successfully.");
+        setMessageType("success");
     };
 
     return (
-        <div className="form-block">
-            <h4>Confirm Product Availability</h4>
+        <div className="form-block polished-form-card">
+            <div className="form-card-header">
+                <h4>Confirm Availability</h4>
+                <p>Respond to the requested product availability.</p>
+            </div>
 
             <label>Availability Status</label>
             <select
@@ -53,13 +76,24 @@ export default function AvailabilityForm({ request, onSave }) {
                 value={availableQuantity}
                 onChange={(e) => setAvailableQuantity(e.target.value)}
                 placeholder="Required if partially available"
+                disabled={availabilityStatus !== "Partially Available"}
             />
 
             <button className="btn btn-primary" type="button" onClick={handleSubmit}>
                 Submit Availability
             </button>
 
-            {message && <p className="status-success">{message}</p>}
+            {message && (
+                <p
+                    className={
+                        messageType === "error"
+                            ? "status-danger"
+                            : "status-success"
+                    }
+                >
+                    {message}
+                </p>
+            )}
         </div>
     );
 }
