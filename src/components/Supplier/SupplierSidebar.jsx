@@ -13,6 +13,7 @@ export default function SupplierSidebar({ activeTab, onChangeTab }) {
                 {tabs.map((tab) => (
                     <button
                         key={tab.key}
+                        type="button"
                         className={`nav-btn ${activeTab === tab.key ? "active" : ""}`}
                         onClick={() => onChangeTab(tab.key)}
                     >
