@@ -19,7 +19,7 @@ function LogIn() {
     e.preventDefault();
 
     if (checkCredentials(username, password)) {
-      navigate("/Dashboard");
+      navigate("/dashboard");
     } else {
       setError("Invalid username or password");
     }
