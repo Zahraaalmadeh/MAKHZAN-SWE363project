@@ -206,7 +206,7 @@ function Inventory({ items, setItems }){
     }
 
     return(
-        <Layout>
+
             <div className="page-with-sidebar">
             <Sidebar />
             <div className="main-content-area">
@@ -417,7 +417,7 @@ function Inventory({ items, setItems }){
     </div>
     </div>
     </div>
-    </Layout>
+
     );
 }
 
