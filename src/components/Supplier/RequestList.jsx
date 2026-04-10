@@ -11,25 +11,33 @@ export default function RequestList({ requests, selectedRequestId, onSelect }) {
                 requests.map((request) => (
                     <div
                         key={request.id}
-                        className={`request-item ${
+                        className={`request-item request-card ${
                             selectedRequestId === request.id ? "selected-card" : ""
                         }`}
                     >
-                        <strong>
-                            {request.id} - {request.product}
-                        </strong>
-                        <p>Department: {request.department}</p>
-                        <p>Quantity: {request.quantity}</p>
-                        <p>Urgency: {request.urgency}</p>
-                        <p>Request Date: {request.requestDate}</p>
+                        <div className="request-card-top">
+                            <strong>
+                                {request.id} - {request.product}
+                            </strong>
 
-                        <span className={`badge ${getBadgeClass(request.status)}`}>
-              {request.status}
-            </span>
+                            <span className={`badge ${getBadgeClass(request.status)}`}>
+                                {request.status}
+                            </span>
+                        </div>
+
+                        <div className="request-meta">
+                            <p><span>Department:</span> {request.department}</p>
+                            <p><span>Quantity:</span> {request.quantity}</p>
+                            <p><span>Urgency:</span> {request.urgency}</p>
+                            <p><span>Request Date:</span> {request.requestDate}</p>
+                        </div>
 
                         <div className="item-actions">
-                            <button className="btn btn-outline" onClick={() => onSelect(request.id)}>
-                                Open
+                            <button
+                                className="btn btn-outline"
+                                onClick={() => onSelect(request.id)}
+                            >
+                                Open Request
                             </button>
                         </div>
                     </div>
