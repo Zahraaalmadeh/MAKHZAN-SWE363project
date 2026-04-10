@@ -62,7 +62,7 @@ function Layout({
 
     const handleHomeClick = () => {
         if (!session) {
-            navigate("/login");
+            navigate("/im-dashboard");
             return;
         }
 
@@ -72,8 +72,9 @@ function Layout({
             navigate("/staffDashboard");
         } else if (role === "supplier") {
             navigate("/supplier");
-        } else {
-            navigate("/");
+        }
+        else if (role === "manager") {
+            navigate("/im-dashboard");
         }
     };
 

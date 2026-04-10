@@ -17,8 +17,8 @@ function getStoredJSON(key, fallbackValue) {
 
 function Layout({
                     children,
-                    supplierNotifications = [],
-                    onOpenSupplierNotification,
+                    managerNotifications = [],
+                    onOpenManagerNotification,
                 }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,15 +27,16 @@ function Layout({
     const [showNotifications, setShowNotifications] = useState(false);
 
     const session = getStoredJSON("session", null);
-    const isSupplier = session?.role === "supplier";
+    const isInventoryManager =
+        session?.role === "manager" || session?.role === "Manager";
 
-    const supplierPaths = ["/supplier", "/supplier-dashboard"];
-    const isSupplierPage = supplierPaths.includes(location.pathname);
+    const inventoryManagerPaths = ["/im-dashboard", "/inventory", "/orders"];
+    const isInventoryManagerPage = inventoryManagerPaths.includes(location.pathname);
 
     const unreadCount = useMemo(() => {
-        if (!isSupplierPage) return 0;
-        return supplierNotifications.filter((item) => item.unread).length;
-    }, [isSupplierPage, supplierNotifications]);
+        if (!isInventoryManagerPage) return 0;
+        return managerNotifications.filter((item) => item.unread).length;
+    }, [isInventoryManagerPage, managerNotifications]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -54,24 +55,24 @@ function Layout({
     }, []);
 
     const handleBellClick = () => {
-        if (!isSupplierPage) return;
+        if (!isInventoryManagerPage) return;
         setShowNotifications((prev) => !prev);
     };
 
     const handleNotificationClick = (notificationId) => {
-        if (onOpenSupplierNotification) {
-            onOpenSupplierNotification(notificationId);
+        if (onOpenManagerNotification) {
+            onOpenManagerNotification(notificationId);
         }
         setShowNotifications(false);
     };
 
     const handleHomeClick = () => {
-        if (isSupplier) {
-            navigate("/supplier");
+        if (isInventoryManager) {
+            navigate("/im-dashboard");
             return;
         }
 
-        navigate("/im-dashboard");
+        navigate("/login");
     };
 
     const handleLogout = () => {
@@ -79,6 +80,7 @@ function Layout({
 
         if (confirmLogout) {
             localStorage.removeItem("session");
+            localStorage.removeItem("isLoggedIn");
             navigate("/login");
         }
     };
@@ -101,33 +103,33 @@ function Layout({
                                 alt="Notifications"
                                 className="icon-img"
                             />
-                            {isSupplierPage && unreadCount > 0 && (
+                            {isInventoryManagerPage && unreadCount > 0 && (
                                 <span className="notification-badge">
                                     {unreadCount > 99 ? "99+" : unreadCount}
                                 </span>
                             )}
                         </button>
 
-                        {isSupplierPage && showNotifications && (
+                        {isInventoryManagerPage && showNotifications && (
                             <div className="notification-popover">
                                 <div className="notification-popover-header">
                                     <div>
                                         <h4>Notifications</h4>
                                         <p>
-                                            {supplierNotifications.length} item
-                                            {supplierNotifications.length !== 1 ? "s" : ""}
+                                            {managerNotifications.length} item
+                                            {managerNotifications.length !== 1 ? "s" : ""}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="notification-popover-list">
-                                    {supplierNotifications.length === 0 ? (
+                                    {managerNotifications.length === 0 ? (
                                         <div className="notification-empty-card">
                                             <strong>No notifications</strong>
-                                            <p>No notifications assigned to you.</p>
+                                            <p>No notifications available.</p>
                                         </div>
                                     ) : (
-                                        supplierNotifications.map((item) => (
+                                        managerNotifications.map((item) => (
                                             <button
                                                 key={item.id}
                                                 type="button"
@@ -139,16 +141,16 @@ function Layout({
                                                 }
                                             >
                                                 <div className="notification-item-top">
-                                                    <strong>{item.product}</strong>
+                                                    <strong>{item.title}</strong>
                                                     <span className="notification-request-id">
-                                                        {item.requestId}
+                                                        {item.type}
                                                     </span>
                                                 </div>
 
                                                 <div className="notification-meta">
-                                                    <span>Qty: {item.quantity}</span>
-                                                    <span>{item.urgency}</span>
-                                                    <span>{item.date}</span>
+                                                    {item.product && <span>{item.product}</span>}
+                                                    {item.department && <span>{item.department}</span>}
+                                                    {item.date && <span>{item.date}</span>}
                                                 </div>
                                             </button>
                                         ))
