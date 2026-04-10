@@ -162,7 +162,7 @@ function Orders({ orders, setOrders  }) {
         </div>
 
         <div className="card">
-            <h2>Create New Order</h2>
+            <h2 className="imh2">Create New Order</h2>
 
             <div className="form-grid">
                 <input
@@ -224,7 +224,7 @@ function Orders({ orders, setOrders  }) {
 
         <div className="card">
             <div className="inventory-list-header">
-                <h2>Order Requests</h2>
+                <h2 className="imh2">Order Requests</h2>
                 <p className="muted-text">Total orders: {orders.length}</p>
             </div>
 

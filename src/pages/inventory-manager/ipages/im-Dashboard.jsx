@@ -70,7 +70,14 @@ function Dashboard({items}){
 
             <div className="dashboard-grid">
                 <div>
-                    <div className="alerts-row">
+
+                    <div className="card">
+                        <h2 className="imh2">Hospital Inventory Overview</h2>
+                        <p className="muted-text">
+                            Click any alert card to open the filtered inventory list.
+                        </p>
+
+                        <div className="alerts-row">
                         <button
                             className="alert-box low-stock-box"
                             onClick={() => handleNavigateToInventory("Low Stock")}
@@ -87,12 +94,6 @@ function Dashboard({items}){
                             <strong>{expiredCount}</strong>
                         </button>
                     </div>
-
-                    <div className="card">
-                        <h2>Hospital Inventory Overview</h2>
-                        <p className="muted-text">
-                            Click any alert card to open the filtered inventory list.
-                        </p>
 
                         <div className="mini-stats">
                             <button

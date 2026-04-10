@@ -221,7 +221,7 @@ function Inventory({ items, setItems }){
         </div>
 
         <div className="card">
-            <h2>Filters</h2>
+            <h2 className="imh2">Filters</h2>
 
             <div className="filters-grid">
                 <input
@@ -292,7 +292,7 @@ function Inventory({ items, setItems }){
         </div>
 
         <div className="card">
-            <h2>{editingItemId ? "Edit Item" : "Add New Item"}</h2>
+            <h2 className="imh2">{editingItemId ? "Edit Item" : "Add New Item"}</h2>
 
             <div className="form-grid">
                 <input
@@ -382,7 +382,7 @@ function Inventory({ items, setItems }){
 
         <div className="card">
             <div className="inventory-list-header">
-                <h2>Inventory List</h2>
+                <h2 className="imh2">Inventory List</h2>
                 <p className="muted-text">Showing {filteredItems.length} items</p>
             </div>
 
