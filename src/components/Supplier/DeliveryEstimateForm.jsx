@@ -57,39 +57,45 @@ export default function DeliveryEstimateForm({ request, onSave }) {
         <div className="form-block polished-form-card">
             <div className="form-card-header">
                 <h4>Delivery Estimate</h4>
-                <p>Provide the expected delivery timeline for this request.</p>
+                <p>Provide the expected delivery date and any shipment notes.</p>
             </div>
 
-            <label>Delivery Date</label>
-            <input
-                type="date"
-                value={estimatedDelivery}
-                onChange={(e) => setEstimatedDelivery(e.target.value)}
-            />
+            <div className="form-grid">
+                <div>
+                    <label>Delivery Date</label>
+                    <input
+                        type="date"
+                        value={estimatedDelivery}
+                        onChange={(e) => setEstimatedDelivery(e.target.value)}
+                    />
+                </div>
 
-            <label>Notes</label>
-            <textarea
-                rows="4"
-                value={deliveryNotes}
-                onChange={(e) => setDeliveryNotes(e.target.value)}
-                placeholder="Optional notes about shipment or preparation"
-            />
+                <div>
+                    <label>Notes</label>
+                    <textarea
+                        rows="4"
+                        value={deliveryNotes}
+                        onChange={(e) => setDeliveryNotes(e.target.value)}
+                        placeholder="Optional notes about delivery or preparation"
+                    />
+                </div>
 
-            <button className="btn btn-primary" type="button" onClick={handleSubmit}>
-                Save Delivery Estimate
-            </button>
+                <button className="btn btn-primary" type="button" onClick={handleSubmit}>
+                    Save Delivery Estimate
+                </button>
 
-            {message && (
-                <p
-                    className={
-                        messageType === "error"
-                            ? "status-danger"
-                            : "status-success"
-                    }
-                >
-                    {message}
-                </p>
-            )}
+                {message && (
+                    <p
+                        className={
+                            messageType === "error"
+                                ? "status-danger"
+                                : "status-success"
+                        }
+                    >
+                        {message}
+                    </p>
+                )}
+            </div>
         </div>
     );
 }
