@@ -100,10 +100,30 @@ Alerts for:
 ---
 
 ## 🚀 How to Use
-1. Login using your assigned role  
-2. Navigate to the dashboard  
-3. Manage or view inventory based on your permissions  
-4. Receive alerts and take actions (order, update, etc.)
+1. Login using your assigned role
+   - For system admin use
+     username : admin
+     password: 1234
+     
+   - For Inventory Manager use
+     username : manager
+     password: 1234
+     
+   - For Inventory Manager use
+     username : manager
+     password: 1234
+     
+   - For Hospital Staff use
+     username : staff
+     password: 1234
+     
+   - For Supplier use
+     username : supplier
+     password: 1234
+     
+3. Navigate to the dashboard  
+4. Manage or view inventory based on your permissions  
+5. Receive alerts and take actions (order, update, etc.)
 
 ---
 ## ⚙️ Setup and Installation
