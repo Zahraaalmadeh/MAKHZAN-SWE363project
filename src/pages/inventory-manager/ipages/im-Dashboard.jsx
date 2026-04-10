@@ -55,7 +55,7 @@ function Dashboard({items}){
 
 
     return(
-        <Layout>
+
             <div className="page-with-sidebar">
             <Sidebar />
             <div className="main-content-area">
@@ -137,7 +137,7 @@ function Dashboard({items}){
         </div>
         </div>
         </div>
-        </Layout>
+
     );
 }
 
