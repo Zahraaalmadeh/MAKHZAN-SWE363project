@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function MessagePanel({
                                          selectedRequestId,
@@ -8,6 +8,11 @@ export default function MessagePanel({
     const [requestId, setRequestId] = useState(selectedRequestId || "");
     const [text, setText] = useState("");
     const [messageStatus, setMessageStatus] = useState("");
+    const [messageType, setMessageType] = useState("");
+
+    useEffect(() => {
+        setRequestId(selectedRequestId || "");
+    }, [selectedRequestId]);
 
     const filteredMessages = useMemo(() => {
         if (!requestId) return messages;
@@ -21,11 +26,13 @@ export default function MessagePanel({
 
         if (!trimmedText) {
             setMessageStatus("Message field cannot be empty.");
+            setMessageType("error");
             return;
         }
 
         if (trimmedText.length > 1000) {
             setMessageStatus("Message must not exceed 1000 characters.");
+            setMessageType("error");
             return;
         }
 
@@ -36,12 +43,16 @@ export default function MessagePanel({
 
         setText("");
         setMessageStatus("Message sent successfully.");
+        setMessageType("success");
     };
 
     return (
         <div className="card panel-card">
             <div className="section-header">
-                <h2>Send Messages to Inventory Manager</h2>
+                <div>
+                    <span className="section-kicker">Communication</span>
+                    <h2>Messages</h2>
+                </div>
             </div>
 
             <form className="form-grid" onSubmit={handleSubmit}>
@@ -59,7 +70,7 @@ export default function MessagePanel({
                     <label>Message</label>
                     <textarea
                         rows="5"
-                        maxLength="1000"
+                        maxLength={1000}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Write your message here..."
@@ -70,7 +81,17 @@ export default function MessagePanel({
                     Send Message
                 </button>
 
-                {messageStatus && <p className="status-success">{messageStatus}</p>}
+                {messageStatus && (
+                    <p
+                        className={
+                            messageType === "error"
+                                ? "status-danger"
+                                : "status-success"
+                        }
+                    >
+                        {messageStatus}
+                    </p>
+                )}
             </form>
 
             <div className="thread">
