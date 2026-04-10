@@ -23,6 +23,13 @@ function LogIn() {
       email: "supplier@makhzan.com",
       active: true,
     },
+    {
+  username: "admin",
+  password: "1234",
+  role: "admin",
+  email: "admin@makhzan.com",
+  active: true,
+}
   ];
 
   const handleSubmit = (e) => {
@@ -56,10 +63,12 @@ function LogIn() {
 
     setError("");
 
-    if (foundUser.role === "supplier") {
-      navigate("/supplier");
+    if (foundUser.role === "admin") {
+      navigate("/dashboard"); // admin dashboard
     } else if (foundUser.role === "staff") {
       navigate("/dashboard");
+    } else if (foundUser.role === "supplier") {
+      navigate("/supplier");
     } else {
       navigate("/");
     }
