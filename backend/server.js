@@ -1,3 +1,4 @@
+/* global process */
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -23,15 +24,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-connectDB().catch(() => {
-  console.warn("DB connection failed");
-});
-
 app.use("/inventoryStaffDB", inventoryRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/auth", authRoutes);
-<<<<<<< Updated upstream
 app.use("/api/requests/my", staffReqRoutes);
 
 app.use("/api/suppliers", supplierRoutes);
@@ -40,16 +36,19 @@ app.use("/api/delivery", deliveryRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/messages", messageRoutes);
 
-=======
-app.use("/api/suppliers", SupplierRoutes);
-app.use("/api/availability", AvailabilityRoutes);
-app.use("/api/delivery", DeliveryRoutes);
-app.use("/api/documents", DocumentRoutes);
-app.use("/api/messages", MessageRoutes);
-app.use("/api/srequests", staffReqRoutes);
->>>>>>> Stashed changes
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server failed to start:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
