@@ -150,6 +150,31 @@ npm run dev
 After starting the server, open the link shown in the terminal, usually:
 http://localhost:5173
 
+## 🔧 Backend Setup
+
+### 1. Install Backend Dependencies
+```bash
+cd backend
+npm install
+```
+
+### 2. Environment Variables
+Inside the `backend` folder, your `.env` file should contain:
+```
+MONGO_URL=your_mongodb_atlas_connection_string
+PORT=3000
+```
+
+### 3. Start the Backend Server
+```bash
+node server.js
+```
+You should see:
+```
+Server running on port 3000
+MongoDB connected
+```
+
 ⚠️ 5. Windows PowerShell Fix (if needed)
 
 If you encounter a script execution error, run:
