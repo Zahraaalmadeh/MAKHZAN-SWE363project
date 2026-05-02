@@ -1,7 +1,9 @@
 import express from "express";
+import mongoose from "mongoose";
 import { StaffModel } from "../models/StaffData.js";
 
 const router = express.Router();
+
 router.get("/", async (req, res) => {
   try {
     const staff = await StaffModel.find();
@@ -10,8 +12,13 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 router.get("/:id", async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID" });
+    }
+
     const staff = await StaffModel.findById(req.params.id);
 
     if (!staff) {
@@ -23,4 +30,5 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 export default router;

@@ -2,32 +2,35 @@ import mongoose from "mongoose";
 
 const requestSchema = new mongoose.Schema(
   {
-    requestId: { type: Number, unique: true },
+    staffId: {
+      type: Number,
+      required: true
+    },
 
-    staffId: { type: mongoose.Schema.Types.ObjectId, ref: "staff" },
-    staffName: String,
+    staffName:{ type: String, 
+      required: true },
+
     department: String,
 
     itemName: String,
-    itemId: { type: mongoose.Schema.Types.ObjectId, ref: "inventory" },
 
     quantity: { type: Number, required: true },
 
     priority: {
       type: String,
-      enum: ["low", "medium", "high"],
-      default: "medium"
+      enum: ["Low", "Medium", "High"],
+      default: "Medium"
     },
 
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending"
-    },
-
-    reason: String
+    }
   },
   { timestamps: true }
 );
 
-export const RequestModel = mongoose.model("requests", requestSchema);
+
+export const RequestModel = mongoose.model("SRequest", requestSchema);
+

@@ -30,7 +30,7 @@ function AddRequest() {
     }
 
     const payload = {
-      staffId: currentStaff._id,
+      staffId: currentStaff.staffId,
       staffName: currentStaff.name,
       department: currentStaff.department,
 
@@ -91,7 +91,7 @@ function AddRequest() {
           type="number"
           min="1"
           value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={(e) => setQuantity(Number(e.target.value))}
           required
         />
 

@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -5,22 +7,25 @@ import cors from "cors";
 import { connectDB } from "./db.js";
 import inventoryRoutes from "./routes/inventoryStaffDB.routes.js";
 import staffRoutes from "./routes/staffRoutes.js";
-import authRoutes from "./routes/authRoutes.js";
 import requestRoutes from "./routes/requestsRoute.js";
-import SupplierRoutes from "./routes/supplierRoutes.js";
-import AvailabilityRoutes from "./routes/availabilityRoutes.js";
-import DeliveryRoutes from "./routes/deliveryRoutes.js";
-import DocumentRoutes from "./routes/documentRoutes.js";
-import MessageRoutes from "./routes/messageRoutes.js";
+// import SupplierRoutes from "./routes/supplierRoutes.js";
+// import AvailabilityRoutes from "./routes/availabilityRoutes.js";
+// import DeliveryRoutes from "./routes/deliveryRoutes.js";
+// import DocumentRoutes from "./routes/documentRoutes.js";
+// import MessageRoutes from "./routes/messageRoutes.js";
 
 dotenv.config();
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-connectDB();
+let dbConnected = false;
+connectDB().then(() => {
+  dbConnected = true;
+}).catch((err) => {
+  console.warn("DB not available, running in fallback mode");
+});
 
 app.use("/inventoryStaffDB", inventoryRoutes);
 app.use("/api/staff", staffRoutes);

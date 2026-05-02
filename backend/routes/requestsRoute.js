@@ -6,7 +6,11 @@ router.post("/", async (req, res) => {
   try {
     const newRequest = await RequestModel.create(req.body);
     res.status(201).json(newRequest);
-  } catch (err) {
+  }   catch (err) {
+    console.log("🔥 ERROR MESSAGE:", err.message);
+    console.log("🔥 FULL ERROR:", err);
+    console.log("🔥 STACK:", err.stack);
+
     res.status(500).json({ error: err.message });
   }
 });
