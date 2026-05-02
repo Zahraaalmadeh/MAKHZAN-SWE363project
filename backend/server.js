@@ -10,7 +10,7 @@ import staffRoutes from "./routes/staffRoutes.js";
 import requestRoutes from "./routes/requestsRoute.js";
 import authRoutes from "./routes/authRoutes.js";
 import staffReqRoutes from "./routes/staffReqRoute.js";
-
+import adminRoutes from "./routes/adminRoutes.js";
 import supplierRoutes from "./routes/supplierRoutes.js";
 import availabilityRoutes from "./routes/availabilityRoutes.js";
 import deliveryRoutes from "./routes/deliveryRoutes.js";
@@ -29,7 +29,7 @@ app.use("/api/staff", staffRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/requests/my", staffReqRoutes);
-
+app.use("/api/admin", adminRoutes);
 app.use("/api/suppliers", supplierRoutes);
 app.use("/api/availability", availabilityRoutes);
 app.use("/api/delivery", deliveryRoutes);
