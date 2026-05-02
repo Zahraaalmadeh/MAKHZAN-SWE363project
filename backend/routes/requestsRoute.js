@@ -7,10 +7,13 @@ router.post("/", async (req, res) => {
     const newRequest = await RequestModel.create(req.body);
     res.status(201).json(newRequest);
   }   catch (err) {
+<<<<<<< Updated upstream
     console.log(" ERROR MESSAGE:", err.message);
     console.log(" FULL ERROR:", err);
     console.log(" STACK:", err.stack);
 
+=======
+>>>>>>> Stashed changes
     res.status(500).json({ error: err.message });
   }
 });
@@ -19,7 +22,17 @@ router.get("/", async (req, res) => {
   res.json(data);
 });
 
-//changes 
+router.get("/:name", async (req, res) => {
+  try {
+    const data = await RequestModel.find({
+      name: req.params.name
+    });
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 router.put("/:id/status", async (req, res) => {
   try {
     const { status, reason } = req.body;

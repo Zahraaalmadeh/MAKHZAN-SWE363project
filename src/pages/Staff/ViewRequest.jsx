@@ -12,15 +12,15 @@ useEffect(() => {
 
   console.log("STAFF:", storedStaff);
 
-  if (!storedStaff?._id) return;
+  if (!storedStaff?.name) return;
 
-  fetch(`http://localhost:3000/api/srequests/${storedStaff._id}`)
-    .then(res => res.json())
-    .then(data => {
+  fetch(`http://localhost:3000/api/requests/${storedStaff.name}`)
+    .then((res) => res.json())
+    .then((data) => {
       console.log("DATA:", data);
       setData(data);
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 }, []);
 
   // filtering logic
@@ -90,7 +90,7 @@ useEffect(() => {
 
           <tbody>
             {filteredData.map((item) => (
-              <tr key={item.id}>
+              <tr key={item._id || item.id}>
                 <td>{item.itemName}</td>
                 <td>{item.quantity}</td>
                 <td>{item.priority}</td>

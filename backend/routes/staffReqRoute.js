@@ -4,10 +4,11 @@ import mongoose from "mongoose";
 
 
 const router = express.Router();
-router.get("/my/:_id", async (req, res) => {
+router.get("/:username", async (req, res) => {
   try {
+    const username = req.params.username;
     const requests = await RequestModel.find({
-      staffId: req.params._id
+      username: username
     });
 
     res.json(requests);

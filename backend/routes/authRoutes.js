@@ -1,5 +1,6 @@
 import express from "express";
 import { StaffModel } from "../models/StaffData.js";
+import e from "express";
 const router = express.Router();
 
 
@@ -7,9 +8,6 @@ const router = express.Router();
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    console.log("BODY:", req.body); 
-
 
     const user = await StaffModel.findOne({
       $or: [{ username }, { email: username }]
@@ -22,16 +20,24 @@ router.post("/login", async (req, res) => {
     if (user.password !== password) {
       return res.status(401).json({ message: "Wrong password" });
     }
-    console.log("INPUT:", username);
-    console.log("USER FOUND:", user);
 
-    res.json(user);
+    const userObj = user.toObject();
+    delete userObj.password;
+
+    res.json({
+      _id: userObj._id,
+      staffId: userObj.staffId,
+      name: userObj.name,
+      email: userObj.email,
+      department: userObj.department,
+      role: userObj.role
+    });
 
   } catch (err) {
-    console.error("LOGIN ERROR:", err);
     res.status(500).json({ message: "Server crashed" });
   }
 });
+<<<<<<< Updated upstream
 import Supplier from "../models/SupplierData.js";
 
 router.post("/supplier-login", async (req, res) => {
@@ -69,4 +75,6 @@ router.post("/supplier-login", async (req, res) => {
     });
   }
 });
+=======
+>>>>>>> Stashed changes
 export default router;
