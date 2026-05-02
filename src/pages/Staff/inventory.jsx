@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
 import './App.css';
+import React, { useState, useEffect } from 'react';
 
 function Inventory() {
-  const initialData = [
-    { id: 1, name: "Saline Solution", stock: 23, expiry: "Aug 12, 2024", dept: "icu", icon: "💧"},
-    { id: 2, name: "Epinephrine", stock: 5, expiry: "Jun 18, 2023", dept: "ph", icon: "💧", note: "Low stock alert"},
-    { id: 3, name: "Antibiotic Tablets", stock: 25, expiry: "Jul 18, 2023", dept: "ph", icon: "💊" },
-    { id: 4, name: "Blood Bags", stock: 2, expiry: "Expired", dept: "bb", icon: "🩸", note: "Expiration alert"},
-  ];
+  const [inventoryData, setInventoryData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/inventoryStaffDB")
+      .then(res => res.json())
+      .then(data => setInventoryData(data));
+  }, []);
+
 
   const [selectedDept, setSelectedDept] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [stockFilter, setStockFilter] = useState("");
-
-  const displayData = initialData.filter(item => {
+  const displayData = inventoryData.filter(item => {
     return (
-      (selectedDept === "" || item.dept === selectedDept) &&
+      (item.dept?.trim().toLowerCase() === selectedDept?.trim().toLowerCase()) &&
       (searchQuery === "" || item.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (stockFilter === "" ||
         (stockFilter === "low" && item.stock <= 5) ||
@@ -23,35 +24,63 @@ function Inventory() {
         (stockFilter === "expired" && item.expiry === "Expired")
       )
     );
-  });
 
-  const notes = displayData.filter(item => item.note);
+
+  });
+    const alerts = inventoryData
+      .filter(item => item.dept === selectedDept)
+      .filter(item => item.stock < 10)
+      .map(item => ({
+        id: item.itemId,
+        message: `Low stock: ${item.name} (${item.stock})`
+      }));
+      const expiredAlerts = inventoryData
+  .filter(item => item.dept === selectedDept)
+  .filter(item => new Date(item.expiry) < new Date())
+  .map(item => ({
+    id: item.itemId,
+    message: `Expired item: ${item.name} (expired on ${item.expiry})`
+  }));
 
   return (
     <div className="inventory">
+   {selectedDept !== "" && (
+  <div className="notes-container">
 
-    {selectedDept !== "" && (
-      <div className="notes-container">
-        {notes.length > 0 ? (
-          notes.map(item => (
-            <div key={item.id} className="note">
-              ⚠️ {item.note} - {item.name}
-            </div>
-          ))
-        ) : (
-          <p>No alerts</p>
-        )}
-      </div>
-    )}
+    {expiredAlerts.length > 0 &&
+      expiredAlerts.map(alert => (
+        <div key={alert.id} className="note expired">
+          🚫 {alert.message}
+        </div>
+      ))
+    }
+
+    {inventoryData
+      .filter(item => item.dept === selectedDept)
+      .filter(item => item.stock < 10)
+      .map(item => (
+        <div key={item.itemId} className="note low-stock">
+          ⚠️ Low stock: {item.name} ({item.stock})
+        </div>
+      ))
+    }
+
+    {expiredAlerts.length === 0 &&
+      inventoryData.filter(item => item.dept === selectedDept).length > 0 &&
+      <p>No alerts</p>
+    }
+
+  </div>
+)}
 
       <div className="filter-section">
-        <select 
-          className="search-select" 
+        <select
+          className="search-select"
           value={selectedDept}
           onChange={(e) => {
             setSelectedDept(e.target.value);
-            setSearchQuery("");  
-            setStockFilter("");   
+            setSearchQuery("");
+            setStockFilter("");
           }}
         >
           <option value="">-- Select a Department --</option>
@@ -64,15 +93,15 @@ function Inventory() {
         {selectedDept !== "" && (
           <>
             <div className="search-form">
-              <input 
-                type="text" 
-                placeholder="Search..." 
+              <input
+                type="text"
+                placeholder="Search..."
                 className="search-input"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} 
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
 
-              <select 
+              <select
                 className="search-select"
                 value={stockFilter}
                 onChange={(e) => setStockFilter(e.target.value)}
@@ -101,9 +130,7 @@ function Inventory() {
               <tbody>
                 {displayData.map((item) => (
                   <tr key={item.id}>
-                    <td>
-                      <span className="icon">{item.icon}</span> {item.name}
-                    </td>
+                    <td>{item.name}</td>
                     <td className="stock-val">{item.stock}</td>
                     <td>{item.expiry}</td>
                   </tr>

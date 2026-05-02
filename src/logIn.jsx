@@ -7,91 +7,51 @@ function LogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const users = [
-    {
-      username: "staff",
-      password: "1234",
-      role: "staff",
-      email: "staff@makhzan.com",
-      active: true,
-    },
-    {
-      username: "supplier01",
-      password: "1234",
-      role: "supplier",
-      email: "supplier@makhzan.com",
-      active: true,
-    },
-    {
-      username: "supplier",
-      password: "1234",
-      role: "supplier",
-      email: "supplier@makhzan.com",
-      active: true,
-    },
-    {
-      username: "admin",
-      password: "1234",
-      role: "admin",
-      email: "admin@makhzan.com",
-      active: true,
-    },
-    {
-      username: "manager",
-      password: "1234",
-      role: "manager",
-      email: "manager@makhzan.com",
-      active: true,
-    },
-  ];
+  try {
+    const res = await fetch("http://localhost:3000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: username.trim(),
+        password: password.trim()
+      })
+    });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const data = await res.json();
 
-    const trimmedUsername = username.trim();
-    const trimmedPassword = password.trim();
-
-    const foundUser = users.find(
-        (user) =>
-            (user.username === trimmedUsername || user.email === trimmedUsername) &&
-            user.password === trimmedPassword
-    );
-
-    if (!foundUser) {
-      setError("Invalid username or password");
+    if (!res.ok) {
+      setError(data.message || "Login failed");
       return;
     }
 
-    if (!foundUser.active) {
-      setError("Account is inactive");
-      return;
-    }
-
+    // save session
     localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem(
-        "session",
-        JSON.stringify({
-          username: foundUser.username,
-          email: foundUser.email,
-          role: foundUser.role,
-        })
-    );
+    localStorage.setItem("staff", JSON.stringify(data));
 
     setError("");
 
-    if (foundUser.role === "admin") {
+    // navigation based on role
+    if (data.role === "admin") {
       navigate("/dashboard");
-    } else if (foundUser.role === "staff") {
+    } else if (data.role === "staff") {
       navigate("/staffDashboard");
-    } else if (foundUser.role === "supplier") {
+    } else if (data.role === "supplier") {
       navigate("/supplier");
-    } else if (foundUser.role === "manager") {
+    } else if (data.role === "manager") {
       navigate("/im-dashboard");
     } else {
       navigate("/");
     }
-  };
+
+  } catch (err) {
+    setError("Server error");
+  }
+};
 
   return (
       <div className="logInBackground">
@@ -122,7 +82,6 @@ function LogIn() {
             <button type="submit" className="submitbtn">
               Log In
             </button>
-
             {error && <p className="error">{error}</p>}
           </form>
         </div>
