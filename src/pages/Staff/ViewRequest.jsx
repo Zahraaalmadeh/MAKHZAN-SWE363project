@@ -2,22 +2,28 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function ViewRequest() {
-  const staff = JSON.parse(localStorage.getItem("staff"));
-
   const [data, setData] = useState([]);
   const [selectedDept, setSelectedDept] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [stockFilter, setStockFilter] = useState("");
 
-  useEffect(() => {
-    if (!staff?.staffId) return;
+useEffect(() => {
+  const storedStaff = JSON.parse(localStorage.getItem("staff"));
 
-    fetch(`http://localhost:3000/api/requests/my/${staff.staffId}`)
-      .then((res) => res.json())
-      .then((result) => setData(result))
-      .catch((err) => console.log("Fetch error:", err));
-  }, [staff]);
+  console.log("STAFF:", storedStaff);
 
+  if (!storedStaff?._id) return;
+
+  fetch(`http://localhost:3000/api/srequests/${storedStaff._id}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log("DATA:", data);
+      setData(data);
+    })
+    .catch(err => console.log(err));
+}, []);
+
+  // filtering logic
   const filteredData = data.filter((item) => {
     const matchesSearch =
       item.itemName?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -84,7 +90,7 @@ function ViewRequest() {
 
           <tbody>
             {filteredData.map((item) => (
-              <tr key={item._id}>
+              <tr key={item.id}>
                 <td>{item.itemName}</td>
                 <td>{item.quantity}</td>
                 <td>{item.priority}</td>
