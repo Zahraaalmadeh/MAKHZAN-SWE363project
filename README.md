@@ -181,3 +181,27 @@ If you encounter a script execution error, run:
 ```bash
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
+---
+## 🚀 Deployment
+
+This project is deployed using **GitHub Actions**.
+
+### 🔧 How it works
+- Deployment is triggered automatically on every push to the `main` branch.
+- GitHub Actions runs a workflow defined in:
+- .github/workflows/main.yml
+  - The workflow uses the **Phase6 environment** configured in GitHub.
+
+### 🌐 Live Application
+Add your deployed link here:
+
+
+### 🔐 Environment Configuration
+- Deployment uses GitHub **Environments**
+- Secrets (if any) are stored securely in:
+Settings → Environments → Phase6
+  
+### ▶️ Running Deployment
+To trigger deployment manually:
+```bash
+git push origin main
