@@ -7,7 +7,11 @@ import inventoryRoutes from "./routes/inventoryStaffDB.routes.js";
 import staffRoutes from "./routes/staffRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import requestRoutes from "./routes/requestsRoute.js";
-import adminRoutes from "./routes/adminRoutes.js";
+import supplierRoutes from "./routes/supplierRoutes.js";
+import availabilityRoutes from "./routes/availabilityRoutes.js";
+import deliveryRoutes from "./routes/deliveryRoutes.js";
+import documentRoutes from "./routes/documentRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
 
 dotenv.config();
 
@@ -22,7 +26,11 @@ app.use("/inventoryStaffDB", inventoryRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminRoutes);
+app.use("/api/suppliers", supplierRoutes);
+app.use("/api/availability", availabilityRoutes);
+app.use("/api/delivery", deliveryRoutes);
+app.use("/api/documents", documentRoutes);
+app.use("/api/messages", messageRoutes);
 
 const PORT = process.env.PORT || 3000;
 
