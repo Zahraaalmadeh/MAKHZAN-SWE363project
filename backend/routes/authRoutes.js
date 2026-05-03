@@ -37,7 +37,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server crashed" });
   }
 });
-<<<<<<< Updated upstream
 import Supplier from "../models/SupplierData.js";
 
 router.post("/supplier-login", async (req, res) => {
@@ -75,6 +74,4 @@ router.post("/supplier-login", async (req, res) => {
     });
   }
 });
-=======
->>>>>>> Stashed changes
 export default router;

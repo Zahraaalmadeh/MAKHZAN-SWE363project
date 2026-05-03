@@ -2,37 +2,26 @@ import express from "express";
 import { RequestModel } from "../models/requests.js";
 
 const router = express.Router();
+
 router.post("/", async (req, res) => {
   try {
     const newRequest = await RequestModel.create(req.body);
     res.status(201).json(newRequest);
-  }   catch (err) {
-<<<<<<< Updated upstream
+  } catch (err) {
     console.log(" ERROR MESSAGE:", err.message);
-    console.log(" FULL ERROR:", err);
-    console.log(" STACK:", err.stack);
-
-=======
->>>>>>> Stashed changes
     res.status(500).json({ error: err.message });
   }
 });
+
 router.get("/", async (req, res) => {
-  const data = await RequestModel.find();
-  res.json(data);
-});
-
-router.get("/:name", async (req, res) => {
   try {
-    const data = await RequestModel.find({
-      name: req.params.name
-    });
-
+    const data = await RequestModel.find();
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 router.put("/:id/status", async (req, res) => {
   try {
     const { status, reason } = req.body;
@@ -77,7 +66,5 @@ router.put("/:id/status", async (req, res) => {
     });
   }
 });
-
-
 
 export default router;

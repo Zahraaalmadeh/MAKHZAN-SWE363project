@@ -8,19 +8,20 @@ function ViewRequest() {
   const [stockFilter, setStockFilter] = useState("");
 
 useEffect(() => {
-  const storedStaff = JSON.parse(localStorage.getItem("staff"));
+  const storedStaff = JSON.parse(localStorage.getItem("staff") || "{}");
 
-  console.log("STAFF:", storedStaff);
+  if (!storedStaff?._id) {
+    console.log("No staff session");
+    return;
+  }
 
-  if (!storedStaff?.name) return;
-
-  fetch(`http://localhost:3000/api/requests/${storedStaff.name}`)
+  fetch(`http://localhost:3000/api/srequests/user/${storedStaff._id}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log("DATA:", data);
-      setData(data);
+      setData(Array.isArray(data) ? data : []);
     })
     .catch((err) => console.log(err));
+
 }, []);
 
   // filtering logic

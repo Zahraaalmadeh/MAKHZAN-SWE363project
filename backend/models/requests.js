@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const requestSchema = new mongoose.Schema(
   {
-    staffId: {
-      type: Number,
-      required: true
-    },
+        staffId: {
+       type: mongoose.Schema.Types.ObjectId,
+       ref: "StaffData", 
+       required: true
+     },
 
     staffName:{ type: String, 
       required: true },
@@ -32,5 +33,5 @@ const requestSchema = new mongoose.Schema(
 );
 
 
-export const RequestModel = mongoose.model("SRequest", requestSchema);
+export const RequestModel = mongoose.model("SRequests", requestSchema);
 

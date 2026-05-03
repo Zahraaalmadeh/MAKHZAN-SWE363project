@@ -30,7 +30,7 @@ function AddRequest() {
     }
 
     const payload = {
-      staffId: currentStaff.staffId,
+      staffId: currentStaff._id,
       staffName: currentStaff.name,
       department: currentStaff.department,
 

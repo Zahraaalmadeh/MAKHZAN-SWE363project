@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const staffSchema = new mongoose.Schema(
   {
-    staffId: { type: Number, unique: true },
+      staffId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "StaffData", 
+    required: true
+  },
 
     name: { type: String, required: true },
 
