@@ -18,6 +18,11 @@ import availabilityRoutes from "./routes/availabilityRoutes.js";
 import deliveryRoutes from "./routes/deliveryRoutes.js";
 import documentRoutes from "./routes/documentRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import managerInventoryRoutes from "./routes/inventoryManager.routes.js"
+import dashboardRoutes from "./routes/IMdashboard.routes.js";
+import managerInventoryRoutes from "./routes/inventoryManager.routes.js"
+import dashboardRoutes from "./routes/IMdashboard.routes.js";
+
 
 dotenv.config();
 
@@ -30,13 +35,12 @@ app.get("/", (req, res) => {
   res.send("Server is running...");
 });
 
-// Routes
 app.use("/inventoryStaffDB", inventoryRoutes);
 app.use("/api/staff", staffRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use("/api/requests", requestRoutes);
-app.use("/api/requests/my", staffReqRoutes); // keep this one
+app.use("/api/requests/my", staffReqRoutes);
 
 app.use("/api/admin", adminRoutes);
 
@@ -45,11 +49,9 @@ app.use("/api/availability", availabilityRoutes);
 app.use("/api/delivery", deliveryRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/manager/inventory", managerInventoryRoutes);
+app.use("/api/manager/dashboard", dashboardRoutes);
 
-// ❌ removed duplicates:
-// app.use("/api/suppliers", supplierRoutes);
-// app.use("/api/availability", availabilityRoutes);
-// app.use("/api/srequests", staffReqRoutes);
 
 const PORT = process.env.PORT || 3000;
 

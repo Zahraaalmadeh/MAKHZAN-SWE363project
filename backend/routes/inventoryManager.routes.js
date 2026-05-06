@@ -2,6 +2,10 @@ import express from "express";
 import { InventoryManagerItem } from "../models/InventoryManagerItem.js";
 
 const router = express.Router();
+router.get("/", (req, res) => {
+  res.json({ message: "Inventory manager route working" });
+});
+
 
 function getItemStatus(item) {
   const today = new Date();
