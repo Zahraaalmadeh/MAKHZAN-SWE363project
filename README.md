@@ -95,7 +95,8 @@ Alerts for:
 
 ## 🛠️ Technologies Used
 - Frontend: HTML, CSS, JavaScript / React  
-- Design: Figma (mid-fidelity prototype)  
+- Design: Figma (mid-fidelity prototype)
+- backend : node.js / mongoDB
 
 ---
 
@@ -194,7 +195,7 @@ This project is deployed using **GitHub Actions**.
 
 ### 🌐 Live Application
 Add your deployed link here:
-.github/workflows/main.yml
+[.github/workflows/main.yml](https://github.com/Zahraaalmadeh/MAKHZAN-SWE363project/deployments)
 
 ### 🔐 Environment Configuration
 - Deployment uses GitHub **Environments**
@@ -205,3 +206,47 @@ Settings → Environments → Phase6
 To trigger deployment manually:
 ```bash
 git push origin main
+---
+##🔌 API Integration
+Makhzan uses a backend API to connect the frontend with the database and manage inventory operations securely.
+📡 Main API Functions
+User authentication and role-based access
+Inventory item management
+Stock level updates
+Expiration tracking
+Order creation and approval
+Notifications and alerts
+Supplier availability updates
+🛠️ Example API Endpoints
+You can document the API like this:
+POST   /api/auth/login
+POST   /api/auth/register
+GET    /api/inventory
+POST   /api/inventory
+PUT    /api/inventory/:id
+DELETE /api/inventory/:id
+
+GET    /api/orders
+POST   /api/orders
+PUT    /api/orders/:id/status
+
+GET    /api/alerts
+POST   /api/notifications
+🔐 Authentication
+The API should use:
+JWT authentication
+Role-based authorization
+Password hashing
+HTTPS for secure communication
+📦 Example Request
+POST /api/auth/login
+{
+  "username": "admin",
+  "password": "admin123"
+}
+✅ Example Response
+{
+  "message": "Login successful",
+  "token": "your-jwt-token",
+  "role": "admin"
+}
