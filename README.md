@@ -204,10 +204,9 @@ Settings → Environments → Phase6
   
 ### ▶️ Running Deployment
 To trigger deployment manually:
-```bash
 git push origin main
 ---
-##🔌 API Integration
+## 🔌 API Integration
 Makhzan uses a backend API to connect the frontend with the database and manage inventory operations securely.
 📡 Main API Functions
 User authentication and role-based access
